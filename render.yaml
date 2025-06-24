@@ -3,7 +3,7 @@ services:
     name: mcp-context-forge
     env: python
     buildCommand: pip install -e .
-    startCommand: ./run-gunicorn.sh
+    startCommand: ENV_FILE=.env.production ./run-gunicorn.sh
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0

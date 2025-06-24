@@ -1,1 +1,1 @@
-web: ./run-gunicorn.sh
+web: ENV_FILE=.env.production ./run-gunicorn.sh

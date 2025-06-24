@@ -44,6 +44,17 @@ Important environment variables to configure:
 - `BASIC_AUTH_PASSWORD`: Admin password
 - `ALLOWED_ORIGINS`: Add your frontend domains if applicable
 
+### Critical Render-Specific Settings
+
+Render requires that web services bind to host `0.0.0.0` and use the port specified by the `PORT` environment variable (default is `10000`). These settings are already configured in the `.env.production` file:
+
+```
+HOST=0.0.0.0
+PORT=10000
+```
+
+Do not change these values unless you know what you're doing, as they are required for Render to properly route traffic to your application.
+
 ## Database Configuration
 
 The default configuration uses SQLite, which is suitable for low-traffic deployments. For production use with higher traffic, consider using a PostgreSQL database:
