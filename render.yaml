@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: mcp-context-forge
+    env: python
+    buildCommand: pip install -e .
+    startCommand: ENV_FILE=.env.production ./run-gunicorn.sh
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: GUNICORN_WORKERS
+        value: 4
+      - key: GUNICORN_TIMEOUT
+        value: 120
+      - key: DATABASE_URL
+        value: sqlite:///./mcp.db
+      - key: LOG_LEVEL
+        value: INFO
+      - key: LOG_FORMAT
+        value: json
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 10000
+      - key: CORS_ENABLED
+        value: true
+      - key: ALLOWED_ORIGINS
+        value: '["https://${RENDER_EXTERNAL_HOSTNAME}"]'
+      - key: AUTH_REQUIRED
+        value: true
+      - key: AUTH_ENCRYPTION_SECRET
+        fromDatabase:
+          name: mcp-context-forge-db
+          property: auth_secret
+      - key: BASIC_AUTH_USER
+        fromDatabase:
+          name: mcp-context-forge-db
+          property: auth_user
+      - key: BASIC_AUTH_PASSWORD
+        fromDatabase:
+          name: mcp-context-forge-db
+          property: auth_password
+
+databases:
+  - name: mcp-context-forge-db
+    databaseName: mcp_context_forge
+    user: mcp_context_forge
+    ipAllowList: []
